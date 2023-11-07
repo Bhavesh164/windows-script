@@ -189,3 +189,23 @@ remove-item alias:sls
 
 # set git aliases
 function gs { git status }
+# git commit and push in one go
+function gitp {
+    param (
+        [string]$CommitMessage
+    )
+
+    if (-not $CommitMessage) {
+        # Prompt for commit message if not provided as argument
+        $CommitMessage = Read-Host "Enter commit message"
+    }
+
+    # Add all changes to staging
+    git add .
+
+    # Commit with the provided message
+    git commit --allow-empty -m $CommitMessage
+
+    # Push to the remote repository
+    git push
+}
