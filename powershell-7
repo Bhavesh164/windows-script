@@ -182,7 +182,15 @@ function co
 
     git checkout $branch;
 }
-remove-item alias:sls
+# Check if the 'sls' alias exists before trying to remove it
+if (Test-Path Alias:\sls) {
+    Remove-Item Alias:\sls
+}
+
+# Check if the 'rm' alias exists before trying to remove it
+if (Test-Path Alias:\rm) {
+    Remove-Item Alias:\rm
+}
 
 # remove a empty directory alias. The syntax of the above code is 
 # ri -r -fo test
