@@ -217,3 +217,8 @@ function gitp {
     # Push to the remote repository
     git push
 }
+
+# get command line history
+function hh{
+	(Get-Content -Path (Get-PSReadLineOption).HistorySavePath | Sort-Object -Unique | fzf | Set-Clipboard); Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait("^{v}")
+}
