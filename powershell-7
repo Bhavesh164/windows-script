@@ -14,7 +14,9 @@ function get_documents_directory {Set-Location "C:\Users\Bhavesh Verma\Documents
 New-Alias cddo get_documents_directory
 
 function get_current_directory_in_windows_terminal {wt -w 0 nt -d .}
-New-Alias newt get_current_directory_in_windows_terminal
+if (!(Get-Alias -Name newt -ErrorAction SilentlyContinue)) {
+	New-Alias newt get_current_directory_in_windows_terminal
+}
 
 $GLOBAL:previousDir = ''
 $GLOBAL:currentDir = ''
@@ -221,4 +223,9 @@ function gitp {
 # get command line history
 function hh{
 	(Get-Content -Path (Get-PSReadLineOption).HistorySavePath | Sort-Object -Unique | fzf | Set-Clipboard); Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait("^{v}")
+}
+function rgi {
+	$searchString = Read-Host "Enter the search string:"
+	$specifyfile = Read-Host "Specify the file pattern:"
+	rg $searchString --glob $specifyfile*
 }
