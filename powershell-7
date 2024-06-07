@@ -225,7 +225,19 @@ function hh{
 	(Get-Content -Path (Get-PSReadLineOption).HistorySavePath | Sort-Object -Unique | fzf | Set-Clipboard); Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait("^{v}")
 }
 function rgi {
-	$searchString = Read-Host "Enter the search string:"
-	$specifyfile = Read-Host "Specify the file pattern:"
-	rg $searchString --glob $specifyfile*
+    do {
+        $searchString = Read-Host "Enter the search string"
+        if (-not $searchString) {
+            Write-Output "Search string cannot be empty. Please enter a valid search string."
+        }
+    } while (-not $searchString)
+
+    do {
+        $specifyfile = Read-Host "Specify the file pattern"
+        if (-not $specifyfile) {
+            Write-Output "File pattern cannot be empty. Please enter a valid file pattern."
+        }
+    } while (-not $specifyfile)
+    
+    rg -i $searchString --glob "$specifyfile*"
 }
