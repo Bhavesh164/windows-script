@@ -1,0 +1,90 @@
+{
+  "editor.minimap.enabled": false,
+  "vim.leader": " ",
+  "vim.neovimUseConfigFile": true,
+  "vscode-neovim.useWSL": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["k", "j"],
+      "after": ["<Esc>"]
+    },
+    {
+      "before": ["<C-i>"],
+      "commands": [""]
+    }
+  ],
+  "vim.useSystemClipboard": true,
+  "vim.easymotion": true,
+  "vim.handleKeys": {
+    "<C-p>": false,
+    "<C-f>": false,
+    "<C-h>": false
+  },
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<Space>", "f", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<Space>", "r"],
+      "commands": ["editor.action.rename"],
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "before": ["<Space>", "w"],
+      "commands": ["workbench.action.showCommands"]
+    },
+    {
+      "before": ["u"],
+      "after": [],
+      "commands": [
+        {
+          "command": "undo",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<C-r>"],
+      "after": [],
+      "commands": [
+        {
+          "command": "redo",
+          "args": []
+        }
+      ]
+    }
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 4,
+  "editor.tabCompletion": "on",
+  "emmet.triggerExpansionOnTab": true,
+  "html.format.contentUnformatted": "",
+  "[python]": {
+    "editor.formatOnType": true,
+    "editor.defaultFormatter": "KevinRose.vsc-python-indent"
+  },
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+  },
+  "editor.wordWrap": "on",
+  "search.mode": "reuseEditor",
+  "editor.stickyScroll.enabled": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "strings": true
+  },
+  "aws.suppressPrompts": {
+    "codeWhispererNewWelcomeMessage": true,
+    "codeWhispererConnectionExpired": true
+  },
+  "security.workspace.trust.untrustedFiles": "open",
+  "[html]": {
+    "editor.defaultFormatter": null
+  },
+  "editor.formatOnSave": true,
+  "explorer.confirmDelete": false,
+  "files.autoSave": "onFocusChange"
+}
