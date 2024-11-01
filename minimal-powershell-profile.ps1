@@ -114,3 +114,27 @@ function rgi {
     
     rg -i $searchString --glob "$specifyfile*"
 }
+
+function fcd {
+    # Get all directories recursively, excluding hidden ones and those starting with '.'
+    $maxdepth=4
+    $dirs = Get-ChildItem -Directory -Recurse -Depth $maxdepth -ErrorAction SilentlyContinue | 
+            Where-Object { 
+                -not ($_.Attributes -band [IO.FileAttributes]::Hidden) -and 
+                -not ($_.Name.StartsWith('.')) 
+            } | 
+            Select-Object -ExpandProperty FullName
+
+    # Check if any directories were found
+    if ($dirs.Count -eq 0) {
+        Write-Host "No directories found."
+        return
+    }
+
+    # Use fzf to select a directory
+    $selectedDir = $dirs | fzf --height 40% --reverse --inline-info
+
+    if ($selectedDir) {
+        Set-Location $selectedDir
+    }
+}
