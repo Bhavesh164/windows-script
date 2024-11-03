@@ -116,25 +116,39 @@ function rgi {
 }
 
 function fcd {
-    # Get all directories recursively, excluding hidden ones and those starting with '.'
-    $maxdepth=4
-    $dirs = Get-ChildItem -Directory -Recurse -Depth $maxdepth -ErrorAction SilentlyContinue | 
-            Where-Object { 
-                -not ($_.Attributes -band [IO.FileAttributes]::Hidden) -and 
-                -not ($_.Name.StartsWith('.')) 
-            } | 
-            Select-Object -ExpandProperty FullName
+    param (
+        [int]$maxdepth = 4,
+        [string]$exclude = '\.git|node_modules|bin|obj'
+    )
 
-    # Check if any directories were found
-    if ($dirs.Count -eq 0) {
-        Write-Host "No directories found."
+    # Get directories recursively up to maxdepth
+    $dirs = @()
+    try {
+        $dirs = Get-ChildItem -Path $PWD -Directory -Recurse -Depth $maxdepth -ErrorAction SilentlyContinue | 
+            Where-Object { 
+                -not ($_.Attributes -band [IO.FileAttributes]::Hidden) -and
+                -not ($_.Name.StartsWith('.')) -and
+                -not ($_.FullName -match $exclude)
+            } |
+            Select-Object -ExpandProperty FullName
+    }
+    catch {
+        Write-Host "Error accessing directories: $_"
         return
     }
 
-    # Use fzf to select a directory
-    $selectedDir = $dirs | fzf --height 40% --reverse --inline-info
+    # Check if any directories were found
+    if ($dirs.Count -eq 0) {
+        Write-Host "No directories found in current path: $PWD"
+        return
+    }
 
+    # Pass directories to fzf
+    $selectedDir = $dirs | Out-String -Stream | fzf --height 40% --reverse --inline-info
+
+    # Change to selected directory if one was chosen
     if ($selectedDir) {
         Set-Location $selectedDir
     }
 }
+
