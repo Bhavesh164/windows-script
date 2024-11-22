@@ -1,0 +1,17 @@
+!Left::
+{
+    ; Send Home key to move to start of line
+    Send("+{Home}")
+	Send("{Delete}")
+	Send("{Up}")
+	Send("{End}")
+}
+
+!right::
+{
+    ; Send Home key to move to start of line
+    Send("+{End}")
+	Send("{Delete}")
+	Send("{Down}")
+	Send("{Home}")
+}
