@@ -58,5 +58,15 @@
     "key": "ctrl+shift+o",
     "command": "workbench.action.quickOpen",
     "args": "#"
+  },
+  {
+        "key": "tab",
+        "command": "editor.action.inlineSuggest.commit",
+        "when": "inlineSuggestionVisible && vim.active && vim.mode == 'Insert'"
+  },
+  {
+        "key": "tab",
+        "command": "acceptSelectedSuggestion",
+        "when": "suggestWidgetVisible && vim.active && vim.mode == 'Insert'"
   }
 ]
