@@ -241,3 +241,9 @@ function rgi {
     
     rg -i $searchString --glob "$specifyfile*"
 }
+
+# Ctrl+r reverse history
+Set-PSReadLineKeyHandler -Chord 'Ctrl+r' -ScriptBlock {
+    $command = (Get-History | Sort-Object Id -Descending | Select-Object -ExpandProperty CommandLine | fzf)
+    if ($command) { [Microsoft.PowerShell.PSConsoleReadLine]::Insert($command) }
+}
